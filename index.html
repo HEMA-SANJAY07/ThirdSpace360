@@ -10,6 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+<!-- Cloudflare Turnstile CAPTCHA JS SDK -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
   :root {
     --bone: #EDE7DD;
@@ -1367,6 +1370,79 @@
     footer { padding: 40px 20px 24px; }
     .contact-detail { grid-template-columns: 90px 1fr; gap: 16px; }
   }
+
+  /* --- Mobile Hamburger Menu Animations & Dropdown Styles --- */
+  .menu-toggle span {
+    transition: transform 0.35s var(--easing), opacity 0.35s var(--easing);
+  }
+
+  @media (max-width: 720px) {
+    /* Prevent body scrolling when the mobile menu is open */
+    body.menu-active {
+      overflow: hidden;
+    }
+
+    /* Force solid background for navigation bar when menu is active */
+    nav.site.menu-open {
+      background: var(--bone) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    /* Modern drop-down glassmorphic drawer for navigation links */
+    nav.site.menu-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bone);
+      padding: 40px 24px;
+      gap: 28px;
+      border-bottom: 1px solid var(--hairline);
+      align-items: center;
+      box-shadow: 0 16px 32px rgba(31, 27, 22, 0.08);
+      z-index: 99;
+      animation: menuSlideDown 0.4s var(--easing) forwards;
+    }
+
+    /* CTA alignment inside mobile menu */
+    nav.site.menu-open .nav-cta {
+      display: block;
+      text-align: center;
+      width: 100%;
+      max-width: 280px;
+      margin: 12px auto 0;
+      animation: menuSlideDown 0.4s var(--easing) 0.06s forwards;
+    }
+
+    @keyframes menuSlideDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Transition Hamburger bars into an 'X' close symbol */
+    nav.site.menu-open .menu-toggle span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    nav.site.menu-open .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+    nav.site.menu-open .menu-toggle span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  }
+
+  /* --- Input Validation Shake Animation --- */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+  .shake {
+    animation: shake 0.3s ease-in-out;
+  }
 </style>
 </head>
 <body>
@@ -1831,6 +1907,17 @@
         <textarea id="message" rows="4" placeholder="The atmosphere, sensibility, or way of living you wish to create…"></textarea>
       </div>
 
+      <!-- Double-Blind Honeypot Field (Visually hidden to catch automated bots) -->
+      <div style="display: none; visibility: hidden;" aria-hidden="true">
+        <label for="organization_real">Organization</label>
+        <input id="organization_real" type="text" name="organization_real" autocomplete="off" tabindex="-1" />
+      </div>
+
+      <!-- Cloudflare Turnstile CAPTCHA bot protection container (Using global dev test sitekey) -->
+      <div class="field full" style="margin-bottom: 20px;">
+        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
+      </div>
+
       <button class="submit-btn" type="button" onclick="handleSubmit()">
         Send Enquiry <span class="arrow">→</span>
       </button>
@@ -1949,24 +2036,233 @@
     });
   })();
 
-  // Form feedback
-  function handleSubmit() {
-    const btn = document.querySelector('.submit-btn');
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Thank you — we\'ll be in touch <span class="arrow">✓</span>';
-    btn.style.background = 'var(--sand)';
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.style.background = '';
-    }, 3200);
+  // --- Mobile Hamburger Navigation Controller ---
+  (function initMobileMenu() {
+    const nav = document.getElementById('nav');
+    const toggle = document.querySelector('.menu-toggle');
+    const links = document.querySelectorAll('.nav-links a');
+    const cta = document.querySelector('.nav-cta');
+
+    if (!toggle || !nav) return;
+
+    // Toggle menu state
+    function toggleMenu() {
+      const isOpen = nav.classList.toggle('menu-open');
+      document.body.classList.toggle('menu-active', isOpen);
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    // Explicitly collapse the menu
+    function closeMenu() {
+      nav.classList.remove('menu-open');
+      document.body.classList.remove('menu-active');
+      toggle.setAttribute('aria-label', 'Open menu');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+
+    // Auto-close menu when navigating to sections
+    links.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    if (cta) {
+      cta.addEventListener('click', closeMenu);
+    }
+
+    // Guard against window resizing while menu is active
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 720) {
+        closeMenu();
+      }
+    }, { passive: true });
+  })();
+
+  // --- Client-Side Form State Caching (Fault-Tolerance) ---
+  function getFormElements() {
+    return {
+      name: document.getElementById('name'),
+      email: document.getElementById('email'),
+      phone: document.getElementById('phone'),
+      space: document.getElementById('space'),
+      city: document.getElementById('city'),
+      message: document.getElementById('message'),
+      honeypot: document.getElementById('organization_real')
+    };
   }
 
-  // Mobile menu (simple smooth scroll close)
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      // visual feedback only
+  // Restore unsubmitted entries on page reload
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      const cached = localStorage.getItem('t360_enquiry_form');
+      if (cached) {
+        const data = JSON.parse(cached);
+        const els = getFormElements();
+        if (data.name && els.name) els.name.value = data.name;
+        if (data.email && els.email) els.email.value = data.email;
+        if (data.phone && els.phone) els.phone.value = data.phone;
+        if (data.space && els.space) els.space.value = data.space;
+        if (data.city && els.city) els.city.value = data.city;
+        if (data.message && els.message) els.message.value = data.message;
+      }
+    } catch (e) {
+      console.warn("Failed to load cached form data:", e);
+    }
+  });
+
+  // Backup current state to localStorage as user writes
+  function cacheFormState() {
+    try {
+      const els = getFormElements();
+      const data = {
+        name: els.name ? els.name.value : '',
+        email: els.email ? els.email.value : '',
+        phone: els.phone ? els.phone.value : '',
+        space: els.space ? els.space.value : 'Residential',
+        city: els.city ? els.city.value : '',
+        message: els.message ? els.message.value : ''
+      };
+      localStorage.setItem('t360_enquiry_form', JSON.stringify(data));
+    } catch (e) {
+      console.warn("Failed to cache form data:", e);
+    }
+  }
+
+  // Bind input tracking listeners
+  window.addEventListener('DOMContentLoaded', () => {
+    const els = getFormElements();
+    ['name', 'email', 'phone', 'space', 'city', 'message'].forEach(key => {
+      const input = els[key];
+      if (input) {
+        input.addEventListener('input', cacheFormState);
+        if (input.tagName === 'SELECT') {
+          input.addEventListener('change', cacheFormState);
+        }
+      }
     });
   });
+
+  // --- Asynchronous Form Validation & Dispatcher ---
+  async function handleSubmit() {
+    const btn = document.querySelector('.submit-btn');
+    const els = getFormElements();
+    if (!btn || !els.name || !els.email) return;
+
+    // Reset warnings
+    [els.name, els.email].forEach(el => {
+      el.style.borderBottomColor = '';
+      el.classList.remove('shake');
+    });
+
+    let hasError = false;
+
+    // Client-side Validation: Name Check
+    if (!els.name.value.trim()) {
+      els.name.style.borderBottomColor = '#D05A3F'; // Coral warning color
+      els.name.classList.add('shake');
+      hasError = true;
+    }
+
+    // Client-side Validation: Email Format Check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!els.email.value.trim() || !emailRegex.test(els.email.value.trim())) {
+      els.email.style.borderBottomColor = '#D05A3F';
+      els.email.classList.add('shake');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Capture Turnstile token if available
+    let turnstileToken = '';
+    try {
+      if (typeof turnstile !== 'undefined') {
+        turnstileToken = turnstile.getResponse();
+      }
+    } catch (e) {
+      console.warn("Cloudflare Turnstile token capture failed:", e);
+    }
+
+    // Prepare secure payload
+    const payload = {
+      name: els.name.value.trim(),
+      email: els.email.value.trim(),
+      phone: els.phone ? els.phone.value.trim() : '',
+      space: els.space ? els.space.value : 'Residential',
+      city: els.city ? els.city.value.trim() : '',
+      message: els.message ? els.message.value.trim() : '',
+      honeypot: els.honeypot ? els.honeypot.value.trim() : '',
+      turnstileToken: turnstileToken
+    };
+
+    // Transition button to active loading state
+    const originalContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = 'Sending enquiry <span class="arrow">...</span>';
+    btn.style.opacity = '0.75';
+
+    try {
+      const response = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Server rejected the submission.');
+      }
+
+      // Success Flow
+      btn.innerHTML = 'Thank you — we\'ll be in touch <span class="arrow">✓</span>';
+      btn.style.background = 'var(--sand)';
+      btn.style.color = 'var(--ink)';
+      btn.style.opacity = '1';
+
+      // Clear localStorage cache and form fields
+      localStorage.removeItem('t360_enquiry_form');
+      ['name', 'email', 'phone', 'city', 'message'].forEach(key => {
+        if (els[key]) els[key].value = '';
+      });
+      if (els.space) els.space.value = 'Residential';
+
+      // Reset Turnstile widget for subsequent submissions
+      try {
+        if (typeof turnstile !== 'undefined') {
+          turnstile.reset();
+        }
+      } catch (e) {}
+
+      setTimeout(() => {
+        btn.innerHTML = originalContent;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 3500);
+
+    } catch (err) {
+      console.error("Enquiry submission failure:", err);
+      
+      // Fallback Graceful Error State
+      btn.innerHTML = 'Submission failed — Retry <span class="arrow">⚠</span>';
+      btn.style.background = '#D05A3F';
+      btn.style.color = 'var(--bone)';
+      btn.style.opacity = '1';
+
+      setTimeout(() => {
+        btn.innerHTML = originalContent;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 4000);
+    }
+  }
 </script>
 
 </body>
