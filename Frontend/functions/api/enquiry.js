@@ -238,7 +238,7 @@ export async function onRequestPost(context) {
         emailSent = true;
       } else {
         const errorData = await emailResponse.json();
-        logs.push(`Resend delivery failure: ${JSON.stringify(errorData)}`);
+        logs.push(`PAYLOAD: ${JSON.stringify({from: emailPayload.from, to: emailPayload.to})} | ERROR: ${JSON.stringify(errorData)}`);
       }
     } catch (e) {
       logs.push(`Resend integration exception: ${e.message}`);
