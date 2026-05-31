@@ -186,11 +186,12 @@ export async function onRequestPost(context) {
   // --- CHANNEL 1: Transactional email via Resend API ---
   const resendApiKey = env.RESEND_API_KEY;
   const clientEmail = env.CLIENT_EMAIL || "studio@thirdspace360.in";
+  const fromEmail = env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
 
   if (resendApiKey) {
     try {
       const emailPayload = {
-        from: "ThirdSpace360 Website <website@thirdspace360.in>", // Requires domain verification inside Resend
+        from: fromEmail, // Defaults to onboarding@resend.dev for testing without a custom domain
         to: [clientEmail],
         reply_to: safeEmail,
         subject: `New Project Enquiry: ${safeName} (${safeSpace})`,
