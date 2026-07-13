@@ -1,0 +1,125 @@
+/* — Form — */
+.enquiry-form {
+  background: rgba(237, 231, 221, 0.03);
+  border: 1px solid rgba(237, 231, 221, 0.12);
+  padding: 48px;
+  border-radius: 2px;
+}
+.form-eyebrow {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--sand);
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+.field-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.field {
+  margin-bottom: 28px;
+  position: relative;
+}
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(237, 231, 221, 0.5);
+  margin-bottom: 10px;
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(237, 231, 221, 0.2);
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: 15px;
+  padding: 10px 0;
+  outline: none;
+  transition: border-color 0.4s var(--easing);
+  font-weight: 400;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.field select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='%23EDE7DD' stroke-width='1' fill='none' opacity='0.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  padding-right: 24px;
+}
+.field select option {
+  background: var(--ink);
+  color: var(--bone);
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-bottom-color: var(--sand);
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(237, 231, 221, 0.3);
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bone);
+  color: var(--ink);
+  border: none;
+  padding: 18px 32px;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.4s var(--easing);
+  margin-top: 16px;
+}
+.submit-btn .arrow {
+  font-family: var(--display);
+  font-size: 18px;
+  transition: transform 0.4s var(--easing);
+}
+.submit-btn:hover {
+  background: var(--sand);
+  color: var(--ink);
+}
+.submit-btn:hover .arrow { transform: translateX(6px); }
+
+/* — Field validation error messages — */
+.field-error-msg {
+  font-size: 11px;
+  color: #D05A3F;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s var(--easing), transform 0.3s var(--easing);
+}
+.field-error-msg.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
