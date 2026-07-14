@@ -503,13 +503,28 @@
         </div>
         <div class="field">
           <label for="space">Nature of Space</label>
-          <select id="space">
+          <select id="space" style="display: none;">
             <option value="" disabled selected>Select one…</option>
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
             <option value="Hospitality">Hospitality</option>
             <option value="Bespoke / Other">Bespoke / Other</option>
           </select>
+          
+          <div class="custom-select" id="custom-space-select" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+            <div class="custom-select-trigger">
+              <span>Select one…</span>
+              <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-options" role="listbox">
+              <div class="custom-option" data-value="Residential" role="option">Residential</div>
+              <div class="custom-option" data-value="Commercial" role="option">Commercial</div>
+              <div class="custom-option" data-value="Hospitality" role="option">Hospitality</div>
+              <div class="custom-option" data-value="Bespoke / Other" role="option">Bespoke / Other</div>
+            </div>
+          </div>
         </div>
       </div>
 

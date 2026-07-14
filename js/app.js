@@ -8,6 +8,7 @@ import { ScrollObserver } from './modules/ScrollObserver.js';
 import { HeroSlider } from './modules/HeroSlider.js';
 import { ServiceTabs } from './modules/ServiceTabs.js';
 import { MobileMenu } from './modules/MobileMenu.js';
+import { CustomSelect } from './modules/CustomSelect.js';
 import { EnquiryForm } from './modules/EnquiryForm.js';
 import { FormValidator } from './services/FormValidator.js';
 import { FormPersistence } from './services/FormPersistence.js';
@@ -26,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mobile hamburger menu
   new MobileMenu(CONFIG.nav).init();
+
+  // Custom themed select dropdown for form
+  new CustomSelect('space', 'custom-space-select').init();
 
   // Enquiry form (dependency-injected)
   const form = new EnquiryForm({

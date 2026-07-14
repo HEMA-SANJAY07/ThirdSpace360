@@ -123,3 +123,84 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* — Custom Select Component — */
+.custom-select {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(237, 231, 221, 0.2);
+  user-select: none;
+  outline: none;
+}
+
+.custom-select-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 400;
+  transition: border-color 0.4s var(--easing);
+}
+
+.custom-select:hover .custom-select-trigger,
+.custom-select:focus .custom-select-trigger {
+  border-bottom-color: var(--sand);
+}
+
+.custom-select-trigger .chevron {
+  width: 10px;
+  height: 6px;
+  color: rgba(237, 231, 221, 0.5);
+  transition: transform 0.3s var(--easing);
+}
+
+.custom-select.open .chevron {
+  transform: rotate(180deg);
+}
+
+.custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--ink-soft);
+  border: 1px solid rgba(237, 231, 221, 0.15);
+  border-top: none;
+  border-radius: 0 0 2px 2px;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.3s var(--easing), transform 0.3s var(--easing), visibility 0.3s var(--easing);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.custom-select.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.custom-option {
+  padding: 12px 18px;
+  font-family: var(--body);
+  font-size: 14.5px;
+  color: var(--bone-soft);
+  transition: background 0.3s var(--easing), color 0.3s var(--easing);
+}
+
+.custom-option:hover {
+  background: rgba(237, 231, 221, 0.06);
+  color: var(--bone);
+}
+
+.custom-option.selected {
+  background: var(--clay);
+  color: var(--bone);
+}
