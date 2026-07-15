@@ -48,6 +48,12 @@ export class FormValidator {
       }
     }
 
+    // Space — required, user must select a value other than empty
+    const spaceVal = (data.space || '').trim();
+    if (!spaceVal) {
+      errors.space = 'Please select the nature of your space.';
+    }
+
     return {
       valid: Object.keys(errors).length === 0,
       errors,

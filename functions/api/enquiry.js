@@ -114,8 +114,8 @@ export async function onRequestPost(context) {
   // ----------------------------------------------------
   // 5. DATA VALIDATION & STRICT SANITIZATION (XSS PROTECTION)
   // ----------------------------------------------------
-  if (!name || !name.trim() || !email || !email.trim()) {
-    return new Response(JSON.stringify({ error: "Validation Error: Name and Email fields are required." }), {
+  if (!name || !name.trim() || !email || !email.trim() || !space || !space.trim()) {
+    return new Response(JSON.stringify({ error: "Validation Error: Name, Email, and Nature of Space fields are required." }), {
       status: 400,
       headers: { "Content-Type": "application/json" }
     });
