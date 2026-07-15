@@ -1,0 +1,26 @@
+/* — Footer — */
+footer {
+  background: var(--ink);
+  color: rgba(237, 231, 221, 0.6);
+  padding: 60px 48px 36px;
+  border-top: 1px solid rgba(237, 231, 221, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+}
+footer .brand {
+  color: var(--bone);
+}
+footer .brand span.three-sixty { color: var(--sand); }
+footer .legal {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+footer .credit {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 13px;
+}

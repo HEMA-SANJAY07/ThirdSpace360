@@ -114,19 +114,31 @@ export async function onRequestPost(context) {
   // ----------------------------------------------------
   // 5. DATA VALIDATION & STRICT SANITIZATION (XSS PROTECTION)
   // ----------------------------------------------------
-  if (!name || !name.trim() || !email || !email.trim()) {
-    return new Response(JSON.stringify({ error: "Validation Error: Name and Email fields are required." }), {
+  if (!name || !name.trim() || !email || !email.trim() || !space || !space.trim()) {
+    return new Response(JSON.stringify({ error: "Validation Error: Name, Email, and Nature of Space fields are required." }), {
       status: 400,
       headers: { "Content-Type": "application/json" }
     });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email.trim())) {
-    return new Response(JSON.stringify({ error: "Validation Error: Invalid email format." }), {
+    return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid email address." }), {
       status: 400,
       headers: { "Content-Type": "application/json" }
     });
+  }
+
+  // Validate phone number format (if provided) against Indian mobile standard
+  if (phone && phone.trim()) {
+    const cleanPhone = phone.trim().replace(/[\s\-()]/g, '');
+    const phoneRegex = /^(?:\+?91|0)?[6-9]\d{9}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid Indian mobile number." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
   }
 
   // Crisp Sanitization: Escape special characters to block XSS vector insertion in emails/logs
@@ -177,13 +189,12 @@ export async function onRequestPost(context) {
   }
 
   // ----------------------------------------------------
-  // 7. RELIABILITY STEP B: DUAL-CHANNEL DISPATCH & FAILOVER
+  // 7. RELIABILITY STEP B: DISPATCH & FAILOVER
   // ----------------------------------------------------
   let emailSent = false;
-  let webhookSent = false;
   let logs = [];
 
-  // --- CHANNEL 1: Transactional email via Resend API ---
+  // --- Transactional email via Resend API ---
   const resendApiKey = env.RESEND_API_KEY;
   const clientEmail = env.CLIENT_EMAIL || "studio@thirdspace360.in";
 
@@ -246,56 +257,10 @@ export async function onRequestPost(context) {
     logs.push("Resend API Key is missing. Skipping email dispatch channel.");
   }
 
-  // --- CHANNEL 2: Real-time notification webhook (Discord / Slack) ---
-  const webhookUrl = env.DISCORD_WEBHOOK_URL;
-  if (webhookUrl) {
-    try {
-      const webhookPayload = {
-        username: "ThirdSpace360 Concierge",
-        avatar_url: "https://images.unsplash.com/photo-1586105251261-72a756497a11?auto=format&fit=crop&w=128&q=80",
-        embeds: [{
-          title: "🏡 New Client Space Enquiry",
-          color: 9136719, // Clay hex #8B6A4F represented as integer
-          fields: [
-            { name: "👤 Name", value: safeName, inline: true },
-            { name: "✉️ Email", value: safeEmail, inline: true },
-            { name: "📞 Phone", value: safePhone, inline: true },
-            { name: "✨ Space Type", value: safeSpace, inline: true },
-            { name: "📍 Location", value: safeCity, inline: true },
-            { name: "📜 Vision", value: safeMessage.length > 1024 ? safeMessage.substring(0, 1021) + "..." : safeMessage }
-          ],
-          footer: { text: `Queue Reference ID: ${enquiryId}` },
-          timestamp: createdAt
-        }]
-      };
-
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(webhookPayload)
-      });
-
-      if (webhookResponse.ok) {
-        webhookSent = true;
-      } else {
-        logs.push(`Chat Webhook delivery failure: HTTP Status ${webhookResponse.status}`);
-      }
-    } catch (e) {
-      logs.push(`Chat Webhook exception: ${e.message}`);
-    }
-  } else {
-    logs.push("Discord/Slack Webhook URL is missing. Skipping chat notification channel.");
-  }
-
   // ----------------------------------------------------
   // 8. RELIABILITY STEP C: UPDATE FINAL DELIVERY STATE
   // ----------------------------------------------------
-  let finalStatus = "sent";
-  if (!emailSent && !webhookSent) {
-    finalStatus = "failed_all";
-  } else if (!emailSent) {
-    finalStatus = "failed_email";
-  }
+  const finalStatus = emailSent ? "sent" : "failed";
 
   if (db) {
     try {
@@ -313,7 +278,7 @@ export async function onRequestPost(context) {
   return new Response(JSON.stringify({ 
     success: true, 
     message: "Enquiry logged successfully.",
-    delivery: { email: emailSent, chat: webhookSent }
+    delivery: { email: emailSent }
   }), {
     status: 200,
     headers: {

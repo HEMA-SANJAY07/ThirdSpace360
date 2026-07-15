@@ -1,0 +1,111 @@
+/* — About — */
+.about {
+  background: var(--bone-soft);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+
+.about-visual {
+  height: 560px;
+  position: relative;
+  background: var(--bone-deep);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.7s var(--easing);
+}
+.about-visual:hover {
+  transform: translateY(-6px);
+}
+.about-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.9) contrast(1.02);
+  transition: transform 1.4s var(--easing), filter 0.7s var(--easing);
+}
+.about-visual:hover img {
+  transform: scale(1.06);
+  filter: saturate(1) contrast(1.03);
+}
+.about-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(31, 27, 22, 0.18));
+  pointer-events: none;
+}
+.about-visual .visual-caption {
+  position: absolute;
+  bottom: 20px; left: 22px; right: 22px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  color: var(--bone);
+}
+.about-visual .visual-caption .cap-title {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 16px;
+}
+.about-visual .visual-caption .cap-meta {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.about-text p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+.about-text p.lead {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 36px;
+  letter-spacing: -0.01em;
+}
+.about-text p.lead .italic-word { font-style: italic; }
+
+.about-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 56px;
+  padding-top: 36px;
+  border-top: 1px solid var(--hairline);
+}
+.pillar .pillar-num {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--clay);
+  margin-bottom: 10px;
+}
+.pillar h4 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 19px;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.pillar p {
+  font-size: 13px;
+  color: var(--ink-mute);
+  line-height: 1.55;
+  margin: 0;
+}

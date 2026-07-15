@@ -1,0 +1,63 @@
+/* — Process — */
+.process-intro {
+  max-width: 620px;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(20px, 1.9vw, 26px);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin-bottom: 80px;
+  letter-spacing: -0.005em;
+}
+.process-intro .italic-word { font-style: italic; color: var(--ink); }
+
+.process-stages {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: 120px 1.2fr 2fr;
+  gap: 60px;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--hairline);
+  align-items: start;
+  transition: background 0.6s var(--easing);
+}
+.stage:hover { background: rgba(139, 106, 79, 0.04); }
+
+.stage-num {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--clay);
+  letter-spacing: -0.04em;
+}
+.stage-num .slash {
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 0.5em;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.stage-name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.stage-name .italic-word { font-style: italic; color: var(--clay); }
+
+.stage-desc {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 560px;
+}
