@@ -11,7 +11,6 @@ import { MobileMenu } from './modules/MobileMenu.js';
 import { CustomSelect } from './modules/CustomSelect.js';
 import { EnquiryForm } from './modules/EnquiryForm.js';
 import { FormValidator } from './services/FormValidator.js';
-import { FormPersistence } from './services/FormPersistence.js';
 import { CaptchaProvider } from './services/CaptchaProvider.js';
 import { ApiClient } from './services/ApiClient.js';
 
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Enquiry form (dependency-injected)
   const form = new EnquiryForm({
     validator: new FormValidator(CONFIG.validation),
-    persistence: new FormPersistence(CONFIG.form.cacheKey),
     api: new ApiClient(CONFIG.form.endpoint),
     captcha: new CaptchaProvider(),
     config: CONFIG.form,

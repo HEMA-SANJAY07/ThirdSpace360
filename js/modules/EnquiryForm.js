@@ -14,14 +14,12 @@ export class EnquiryForm {
   /**
    * @param {Object} deps
    * @param {import('../services/FormValidator.js').FormValidator}   deps.validator
-   * @param {import('../services/FormPersistence.js').FormPersistence} deps.persistence
    * @param {import('../services/ApiClient.js').ApiClient}           deps.api
    * @param {import('../services/CaptchaProvider.js').CaptchaProvider} deps.captcha
    * @param {Object} deps.config - `CONFIG.form` subset.
    */
-  constructor({ validator, persistence, api, captcha, config }) {
+  constructor({ validator, api, captcha, config }) {
     this.validator = validator;
-    this.persistence = persistence;
     this.api = api;
     this.captcha = captcha;
     this.config = config;
@@ -53,18 +51,7 @@ export class EnquiryForm {
       this.originalBtnHTML = this.btn.innerHTML;
     }
 
-    // Restore draft from localStorage
-    this._restoreDraft();
 
-    // Cache on every keystroke / selection change
-    this.config.fieldIds.forEach((id) => {
-      const el = this.els[id];
-      if (!el) return;
-      el.addEventListener('input', () => this._cacheDraft());
-      if (el.tagName === 'SELECT') {
-        el.addEventListener('change', () => this._cacheDraft());
-      }
-    });
 
     // FN-01 — listen on the `<form>` submit event (covers Enter key + button)
     this.formEl.addEventListener('submit', (e) => this.handleSubmit(e));
@@ -137,7 +124,6 @@ export class EnquiryForm {
       await this.api.submit(payload);
 
       // 7. Success path
-      this.persistence.clear();
       this.captcha.reset();
       this._clearFormFields();
       this._setBtnSuccess();
@@ -233,24 +219,7 @@ export class EnquiryForm {
     });
   }
 
-  _restoreDraft() {
-    const cached = this.persistence.load();
-    if (!cached) return;
-    this.config.fieldIds.forEach((id) => {
-      if (cached[id] && this.els[id]) {
-        this.els[id].value = cached[id];
-      }
-    });
-  }
 
-  _cacheDraft() {
-    const data = {};
-    this.config.fieldIds.forEach((id) => {
-      const el = this.els[id];
-      data[id] = el ? el.value : '';
-    });
-    this.persistence.save(data);
-  }
 
   _clearFormFields() {
     ['name', 'email', 'phone', 'city', 'message'].forEach((id) => {
