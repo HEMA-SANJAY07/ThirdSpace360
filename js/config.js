@@ -43,9 +43,9 @@ export const CONFIG = {
   },
 
   validation: {
-    /** Basic RFC-compatible email pattern */
-    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    /** Loose international phone number pattern */
-    phone: /^\+?[\d\s\-()]{7,15}$/,
+    /** Robust email validation regex */
+    email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    /** Indian mobile phone pattern (supports optional +91, 91, 0 prefix, and 10 digits starting with 6-9) */
+    phone: /^(?:\+?91|0)?[6-9]\d{9}$/,
   },
 };

@@ -121,12 +121,24 @@ export async function onRequestPost(context) {
     });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email.trim())) {
-    return new Response(JSON.stringify({ error: "Validation Error: Invalid email format." }), {
+    return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid email address." }), {
       status: 400,
       headers: { "Content-Type": "application/json" }
     });
+  }
+
+  // Validate phone number format (if provided) against Indian mobile standard
+  if (phone && phone.trim()) {
+    const cleanPhone = phone.trim().replace(/[\s\-()]/g, '');
+    const phoneRegex = /^(?:\+?91|0)?[6-9]\d{9}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid Indian mobile number." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
   }
 
   // Crisp Sanitization: Escape special characters to block XSS vector insertion in emails/logs

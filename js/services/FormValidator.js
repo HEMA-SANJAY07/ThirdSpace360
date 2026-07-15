@@ -38,10 +38,14 @@ export class FormValidator {
       errors.email = 'Please enter a valid email address.';
     }
 
-    // Phone — optional, but if provided it must match configured regex
+    // Phone — optional, but if provided it must match configured Indian mobile regex
     const phoneVal = (data.phone || '').trim();
-    if (phoneVal && !this.rules.phone.test(phoneVal)) {
-      errors.phone = 'Please enter a valid phone number.';
+    if (phoneVal) {
+      // Strip common formatting characters (spaces, hyphens, parentheses) before check
+      const cleanPhone = phoneVal.replace(/[\s\-()]/g, '');
+      if (!this.rules.phone.test(cleanPhone)) {
+        errors.phone = 'Please enter a valid Indian mobile number (e.g. +91 98765 43210).';
+      }
     }
 
     return {
