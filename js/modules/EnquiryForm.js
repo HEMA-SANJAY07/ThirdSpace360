@@ -167,12 +167,17 @@ export class EnquiryForm {
    * @param {string}      message - Human-readable error string.
    */
   showFieldError(fieldEl, message) {
-    fieldEl.style.borderBottomColor = this.config.errorColor;
+    // If the element is hidden (like the native select), target the custom select visual replacement
+    const targetEl = (fieldEl.tagName === 'SELECT' && fieldEl.style.display === 'none')
+      ? document.getElementById('custom-space-select')
+      : fieldEl;
 
-    // FN-10 — force reflow so the shake animation replays
-    fieldEl.classList.remove('shake');
-    void fieldEl.offsetWidth;
-    fieldEl.classList.add('shake');
+    if (targetEl) {
+      targetEl.style.borderBottomColor = this.config.errorColor;
+      targetEl.classList.remove('shake');
+      void targetEl.offsetWidth; // force reflow
+      targetEl.classList.add('shake');
+    }
 
     // Insert or update error message span
     let msgEl = fieldEl.parentElement?.querySelector('.field-error-msg');
@@ -183,6 +188,10 @@ export class EnquiryForm {
     }
     msgEl.textContent = message;
     msgEl.style.display = 'block';
+    
+    // Force a small reflow and add the visible class for transition (opacity & transform)
+    void msgEl.offsetHeight;
+    msgEl.classList.add('visible');
   }
 
   /**
@@ -192,11 +201,19 @@ export class EnquiryForm {
     this.config.fieldIds.forEach((id) => {
       const el = this.els[id];
       if (!el) return;
-      el.style.borderBottomColor = '';
-      el.classList.remove('shake');
+
+      const targetEl = (el.tagName === 'SELECT' && el.style.display === 'none')
+        ? document.getElementById('custom-space-select')
+        : el;
+
+      if (targetEl) {
+        targetEl.style.borderBottomColor = '';
+        targetEl.classList.remove('shake');
+      }
 
       const msg = el.parentElement?.querySelector('.field-error-msg');
       if (msg) {
+        msg.classList.remove('visible');
         msg.textContent = '';
         msg.style.display = 'none';
       }
