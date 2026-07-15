@@ -144,6 +144,7 @@ nav.site.scrolled {
   .mobile-cta-item {
     display: block;
     width: 100%;
+    text-align: center;
     margin-top: 12px;
     animation: menuSlideDown 0.4s var(--easing) 0.06s forwards;
   }

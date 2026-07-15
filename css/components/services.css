@@ -67,6 +67,11 @@
   background: var(--bone-deep);
   aspect-ratio: 4 / 5;
   min-height: 480px;
+  cursor: pointer;
+  transition: transform 0.7s var(--easing);
+}
+.tab-image:hover {
+  transform: translateY(-6px);
 }
 .tab-img {
   position: absolute;
@@ -76,12 +81,17 @@
   object-fit: cover;
   opacity: 0;
   filter: saturate(0.92) contrast(1.02);
-  transition: opacity 0.9s var(--easing), transform 7s var(--easing);
+  transition: opacity 0.9s var(--easing), transform 7s var(--easing), filter 0.7s var(--easing);
   transform: scale(1.04);
 }
 .tab-img.active {
   opacity: 1;
   transform: scale(1);
+}
+.tab-image:hover .tab-img.active {
+  transition: opacity 0.9s var(--easing), transform 1.4s var(--easing), filter 0.7s var(--easing);
+  transform: scale(1.06);
+  filter: saturate(1) contrast(1.03);
 }
 .tab-image::after {
   content: '';
