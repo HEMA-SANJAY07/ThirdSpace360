@@ -79,6 +79,11 @@ export class MobileMenu {
   open() {
     if (!this.nav || !this.toggle) return;
     this.isOpen = true;
+
+    // Calculate scrollbar width and set CSS custom property
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+
     this.nav.classList.add('menu-open');
     document.body.classList.add('menu-active');
     this.backdrop.classList.add('visible');
@@ -90,6 +95,10 @@ export class MobileMenu {
   close() {
     if (!this.nav || !this.toggle) return;
     this.isOpen = false;
+
+    // Reset CSS custom property
+    document.documentElement.style.setProperty('--scrollbar-width', '0px');
+
     this.nav.classList.remove('menu-open');
     document.body.classList.remove('menu-active');
     this.backdrop.classList.remove('visible');

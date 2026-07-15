@@ -1,7 +1,7 @@
 /* — Navigation — */
 nav.site {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0; left: 0; right: var(--scrollbar-width, 0px);
   z-index: 100;
   padding: 28px 48px;
   display: flex;
@@ -79,7 +79,9 @@ nav.site.scrolled {
   border-radius: 999px;
   transition: all 0.4s var(--easing);
 }
-.nav-cta:hover { background: var(--ink); color: var(--bone); }
+.mobile-cta-item {
+  display: none;
+}
 
 .menu-toggle { display: none; }
 
@@ -107,6 +109,7 @@ nav.site.scrolled {
   /* Prevent body scrolling when the mobile menu is open */
   body.menu-active {
     overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   /* Force solid background for navigation bar when menu is active */
@@ -135,13 +138,20 @@ nav.site.scrolled {
   }
 
   /* CTA alignment inside mobile menu */
-  nav.site.menu-open .nav-cta {
+  .desktop-cta {
+    display: none !important;
+  }
+  .mobile-cta-item {
     display: block;
+    width: 100%;
+    margin-top: 12px;
+    animation: menuSlideDown 0.4s var(--easing) 0.06s forwards;
+  }
+  .mobile-cta-item .nav-cta {
+    display: inline-block;
     text-align: center;
     width: 100%;
     max-width: 280px;
-    margin: 12px auto 0;
-    animation: menuSlideDown 0.4s var(--easing) 0.06s forwards;
   }
 
   @keyframes menuSlideDown {

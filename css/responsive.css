@@ -1,4 +1,29 @@
-/* — Responsive — */
+/* — Responsive Layouts — */
+
+/* --- Centralised limits for large PC / Desktop displays (min-width: 1440px) --- */
+@media (min-width: 1440px) {
+  nav.site {
+    left: 50% !important;
+    transform: translateX(-50%);
+    right: auto !important;
+    width: 100%;
+    max-width: 1360px;
+  }
+  
+  .section-header,
+  .about-grid,
+  .services-tabbed,
+  .moodboard-grid,
+  .process-stages,
+  .contact-grid {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+}
+
+/* --- Standard Laptops & Landscape Tablets (max-width: 1024px) --- */
 @media (max-width: 1024px) {
   nav.site, nav.site.scrolled { padding: 22px 28px; }
   section { padding: 100px 28px; }
@@ -8,9 +33,20 @@
   .hero-slide-caption { left: 24px; bottom: 32px; font-size: 13px; }
   .hero-slide-meta { right: 24px; bottom: 32px; }
   .scroll-cue { right: 22px; top: auto; bottom: 24px; }
-  .section-header { grid-template-columns: 1fr; gap: 28px; margin-bottom: 64px; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+  
+  .section-header {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 64px;
+  }
+  
+  .about-grid, .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  
   .about-visual { height: 380px; }
+  
   .moodboard-grid {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 240px);
@@ -21,6 +57,7 @@
   .mood-4 { grid-column: 2; grid-row: 2 / span 2; }
   .mood-5 { grid-column: 1; grid-row: 3; }
   .mood-6 { grid-column: 1 / -1; grid-row: 4; }
+  
   .services-tabbed {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -32,14 +69,29 @@
     padding-bottom: 4px;
     scrollbar-width: thin;
   }
-  .tab { flex: 0 0 auto; white-space: nowrap; padding: 14px 18px; font-size: 13px; }
+  .tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 14px 18px;
+    font-size: 13px;
+  }
   .tab-image { min-height: 380px; aspect-ratio: 16 / 10; }
-  .stage { grid-template-columns: 80px 1fr; gap: 28px; padding: 40px 0; }
-  .stage-desc { grid-column: 1 / -1; padding-left: 108px; }
+  
+  .stage {
+    grid-template-columns: 80px 1fr;
+    gap: 28px;
+    padding: 40px 0;
+  }
+  .stage-desc {
+    grid-column: 1 / -1;
+    padding-left: 108px;
+  }
 }
 
+/* --- Tablets & Large Phones (max-width: 720px) --- */
 @media (max-width: 720px) {
   .nav-links, .nav-cta { display: none; }
+  
   .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -54,19 +106,23 @@
     height: 1px;
     background: var(--ink);
   }
+  
   nav.site, nav.site.scrolled { padding: 18px 20px; }
   section { padding: 80px 20px; }
   .hero { padding: 110px 0 40px; }
   .hero-title-block { padding: 0 20px 36px; }
+  
   .hero h1 { font-size: clamp(40px, 11vw, 64px); }
   .hero-tagline { font-size: 13px; margin-top: 16px; }
   .hero-image-frame { height: 44vh; min-height: 280px; }
+  
   .hero-slide-caption { left: 18px; bottom: 30px; font-size: 12px; }
   .hero-slide-meta { display: none; }
   .hero-indicators { bottom: 14px; }
   .hero-indicator { width: 22px; }
   .hero-indicator.active { width: 36px; }
   .scroll-cue { display: none; }
+  
   .moodboard-grid {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, 220px);
@@ -81,16 +137,46 @@
   .mood-4 { grid-row: 4; }
   .mood-5 { grid-row: 5; }
   .mood-6 { grid-row: 6; }
+  
   .about-pillars { grid-template-columns: 1fr; gap: 20px; }
   .tab { padding: 12px 16px; font-size: 12.5px; }
-  .tab-image { min-height: 320px; aspect-ratio: 4/5; }
+  .tab-image { min-height: 320px; aspect-ratio: 4 / 5; }
   .tab-panel h3 { font-size: 26px; }
   .tab-panel p { font-size: 14.5px; }
-  .stage { grid-template-columns: 60px 1fr; padding: 32px 0; gap: 20px; }
+  
+  .stage {
+    grid-template-columns: 60px 1fr;
+    padding: 32px 0;
+    gap: 20px;
+  }
   .stage-num { font-size: 40px; }
   .stage-desc { padding-left: 80px; }
+  
   .field-group { grid-template-columns: 1fr; gap: 0; }
   .enquiry-form { padding: 28px 22px; }
   footer { padding: 40px 20px 24px; }
   .contact-detail { grid-template-columns: 90px 1fr; gap: 16px; }
+}
+
+/* --- Mobile Viewports (max-width: 480px) --- */
+@media (max-width: 480px) {
+  section { padding: 70px 16px; }
+  .hero-title-block { padding: 0 16px 28px; }
+  .hero h1 { font-size: clamp(34px, 10vw, 48px); }
+  .hero-image-frame { height: 38vh; min-height: 240px; }
+  
+  .tab-image { min-height: 260px; }
+  .tab-panel h3 { font-size: 22px; }
+  .tab-panel p { font-size: 14px; }
+  
+  .stage {
+    grid-template-columns: 50px 1fr;
+    gap: 16px;
+    padding: 24px 0;
+  }
+  .stage-num { font-size: 32px; }
+  .stage-desc { padding-left: 66px; }
+  
+  .enquiry-form { padding: 20px 16px; }
+  .contact-detail { grid-template-columns: 80px 1fr; gap: 12px; }
 }
