@@ -2,13 +2,7 @@
 
 /* --- Centralised limits for large PC / Desktop displays (min-width: 1440px) --- */
 @media (min-width: 1440px) {
-  nav.site {
-    left: 50% !important;
-    transform: translateX(-50%);
-    right: auto !important;
-    width: 100%;
-    max-width: 1360px;
-  }
+
   
   .section-header,
   .about-grid,

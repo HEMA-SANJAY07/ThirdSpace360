@@ -43,6 +43,8 @@ export const CONFIG = {
   },
 
   validation: {
+    /** Name pattern (letters, spaces, hyphens, apostrophes only, Unicode-supported, 2-50 chars) */
+    name: /^[\p{L}\s\-']{2,50}$/u,
     /** Robust email validation regex */
     email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     /** Indian mobile phone pattern (supports optional +91, 91, 0 prefix, and 10 digits starting with 6-9) */
