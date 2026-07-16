@@ -1,6 +1,6 @@
 /**
  * Cloudflare Pages Function: Secure & Fault-Tolerant Form Processor
- * Path: /Frontend/functions/api/enquiry.js
+ * Path: /functions/api/enquiry.js
  * 
  * Flow:
  * 1. CORS Verification (Strict origin locks)
