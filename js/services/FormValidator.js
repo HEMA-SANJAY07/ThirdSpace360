@@ -25,9 +25,12 @@ export class FormValidator {
   validate(data) {
     const errors = {};
 
-    // Name — required, non-empty after trim
-    if (!data.name || !data.name.trim()) {
+    // Name — required, must contain only letters, spaces, hyphens, and apostrophes (2-50 chars)
+    const nameVal = (data.name || '').trim();
+    if (!nameVal) {
       errors.name = 'Please enter your name.';
+    } else if (!this.rules.name.test(nameVal)) {
+      errors.name = 'Please enter a valid name (letters, spaces, hyphens, and apostrophes only).';
     }
 
     // Email — required, must match configured regex

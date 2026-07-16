@@ -121,6 +121,15 @@ export async function onRequestPost(context) {
     });
   }
 
+  // Validate name (letters, spaces, hyphens, and apostrophes only, 2-50 chars)
+  const nameRegex = /^[\p{L}\s\-']{2,50}$/u;
+  if (!nameRegex.test(name.trim())) {
+    return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid name (letters, spaces, hyphens, and apostrophes only)." }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email.trim())) {
     return new Response(JSON.stringify({ error: "Validation Error: Please enter a valid email address." }), {
