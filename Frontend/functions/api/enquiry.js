@@ -210,7 +210,7 @@ export async function onRequestPost(context) {
   if (resendApiKey) {
     try {
       const emailPayload = {
-        from: "ThirdSpace360 Website <website@thirdspace360.in>", // Requires domain verification inside Resend
+        from: "onboarding@resend.dev",
         to: [clientEmail],
         reply_to: safeEmail,
         subject: `New Project Enquiry: ${safeName} (${safeSpace})`,
