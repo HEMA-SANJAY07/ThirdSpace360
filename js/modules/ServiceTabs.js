@@ -19,6 +19,7 @@ export class ServiceTabs {
    * Query the DOM and bind click listeners.
    */
   init() {
+    this.tabsList = document.querySelector('.services-tabbed .tabs-list');
     this.tabs = document.querySelectorAll('.services-tabbed .tab');
     this.imgs = document.querySelectorAll('.services-tabbed .tab-img');
     this.panels = document.querySelectorAll('.services-tabbed .tab-panel');
@@ -32,7 +33,30 @@ export class ServiceTabs {
     );
 
     this.tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => this.activate(i));
+      tab.addEventListener('click', (e) => {
+        const isMobile = window.innerWidth <= 1024;
+        if (isMobile && this.tabsList) {
+          const isOpen = this.tabsList.classList.contains('open');
+          if (tab.classList.contains('active')) {
+            // Clicked active tab (toggle open/close dropdown)
+            this.tabsList.classList.toggle('open');
+          } else {
+            // Clicked inactive option (select it and close dropdown)
+            this.activate(i);
+            this.tabsList.classList.remove('open');
+          }
+        } else {
+          // Normal desktop click behavior
+          this.activate(i);
+        }
+      });
+    });
+
+    // Close mobile dropdown when clicking outside of it
+    document.addEventListener('click', (e) => {
+      if (this.tabsList && !this.tabsList.contains(e.target)) {
+        this.tabsList.classList.remove('open');
+      }
     });
   }
 
