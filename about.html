@@ -511,6 +511,26 @@
     }
   }
 </style>
+
+<!-- Modular Stylesheets -->
+<link rel="stylesheet" href="css/fonts.css" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/typography.css" />
+<link rel="stylesheet" href="css/components/nav.css" />
+<link rel="stylesheet" href="css/components/hero.css" />
+<link rel="stylesheet" href="css/components/section.css" />
+<link rel="stylesheet" href="css/components/about.css" />
+<link rel="stylesheet" href="css/components/services.css" />
+<link rel="stylesheet" href="css/components/projects.css" />
+<link rel="stylesheet" href="css/components/process.css" />
+<link rel="stylesheet" href="css/components/contact.css" />
+<link rel="stylesheet" href="css/components/form.css" />
+<link rel="stylesheet" href="css/components/footer.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </head>
 <body>
 
@@ -685,7 +705,7 @@
         <textarea id="message" rows="4" placeholder="Tell us about your space and requirements…"></textarea>
       </div>
 
-      <button class="submit-btn" type="button" onclick="handleSubmit()">
+      <button class="submit-btn" type="button" >
         Submit <span class="arrow">→</span>
       </button>
     </div>
@@ -715,15 +735,7 @@
   reveals.forEach(el => io.observe(el));
 
   // Form feedback
-  function handleSubmit() {
-    const btn = document.querySelector('.submit-btn');
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Thank you — we\'ll be in touch <span class="arrow">✓</span>';
-    btn.style.background = 'var(--sand)';
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.style.background = '';
-    }, 3200);
+  , 3200);
   }
 </script>
 
