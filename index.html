@@ -887,12 +887,12 @@
 
   .stage {
     display: grid;
-    grid-template-columns: 120px 1.2fr 2fr;
-    gap: 60px;
-    padding: 56px 0;
+    grid-template-columns: 140px 1.3fr 1.8fr;
+    gap: 32px;
+    padding: 44px 0;
     border-bottom: 1px solid var(--hairline);
-    align-items: start;
-    transition: background 0.6s var(--easing);
+    align-items: baseline;
+    transition: background 0.4s var(--easing);
   }
   .stage:hover { background: rgba(139, 106, 79, 0.04); }
 
@@ -1205,7 +1205,11 @@
     }
     .sh-preview { position: relative; top: auto; height: 380px; order: -1; }
     .stage { grid-template-columns: 80px 1fr; gap: 28px; padding: 40px 0; }
-    .stage-desc { grid-column: 1 / -1; padding-left: 108px; }
+    .stage-desc {
+    grid-column: 2 / -1;
+    padding-left: 0;
+    margin: 0;
+  }
   }
 
   @media (max-width: 720px) {

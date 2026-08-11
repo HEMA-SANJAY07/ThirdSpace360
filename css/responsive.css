@@ -120,8 +120,9 @@
     padding: 40px 0;
   }
   .stage-desc {
-    grid-column: 1 / -1;
-    padding-left: 108px;
+    grid-column: 2 / -1;
+    padding-left: 0;
+    margin: 0;
   }
 }
 
@@ -187,7 +188,11 @@
     gap: 20px;
   }
   .stage-num { font-size: 40px; }
-  .stage-desc { padding-left: 80px; }
+  .stage-desc {
+    grid-column: 2 / -1;
+    padding-left: 0;
+    margin: 0;
+  }
   
   .field-group { grid-template-columns: 1fr; gap: 0; }
   .enquiry-form { padding: 28px 22px; }
@@ -212,7 +217,11 @@
     padding: 24px 0;
   }
   .stage-num { font-size: 32px; }
-  .stage-desc { padding-left: 66px; }
+  .stage-desc {
+    grid-column: 2 / -1;
+    padding-left: 0;
+    margin: 0;
+  }
   
   .enquiry-form { padding: 20px 16px; }
   .contact-detail { grid-template-columns: 80px 1fr; gap: 12px; }
