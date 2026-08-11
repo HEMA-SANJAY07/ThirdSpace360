@@ -692,7 +692,7 @@
         </div>
         <div class="field">
           <label for="space">Nature of Space *</label>
-          <select id="space" required>
+          <select id="space" name="space" required style="display:none !important;">
             <option value="" disabled selected>Select nature of space…</option>
             <option value="Residential">Residential</option>
             <option value="Commercial">Commercial</option>
@@ -703,6 +703,26 @@
             <option value="Bespoke Furniture &amp; Detailing">Bespoke Furniture &amp; Detailing</option>
             <option value="Other">Other</option>
           </select>
+
+          <!-- Custom Themed Select Dropdown -->
+          <div class="custom-select" id="custom-space-select" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0">
+            <div class="custom-select-trigger">
+              <span>Select nature of space…</span>
+              <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="custom-options" role="listbox">
+              <div class="custom-option" data-value="Residential" role="option">Residential</div>
+              <div class="custom-option" data-value="Commercial" role="option">Commercial</div>
+              <div class="custom-option" data-value="Hospitality" role="option">Hospitality</div>
+              <div class="custom-option" data-value="Turnkey Execution" role="option">Turnkey Execution</div>
+              <div class="custom-option" data-value="Design + Build" role="option">Design + Build</div>
+              <div class="custom-option" data-value="Project Management" role="option">Project Management</div>
+              <div class="custom-option" data-value="Bespoke Furniture &amp; Detailing" role="option">Bespoke Furniture &amp; Detailing</div>
+              <div class="custom-option" data-value="Other" role="option">Other</div>
+            </div>
+          </div>
         </div>
       </div>
 
