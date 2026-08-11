@@ -867,13 +867,13 @@
 
   /* — Process — */
   .process-intro {
-    max-width: 620px;
+    max-width: 580px;
     font-family: var(--display);
     font-weight: 300;
-    font-size: clamp(20px, 1.9vw, 26px);
+    font-size: clamp(20px, 1.9vw, 25px);
     line-height: 1.45;
     color: var(--ink-soft);
-    margin-bottom: 80px;
+    margin-bottom: 64px;
     letter-spacing: -0.005em;
   }
   .process-intro .italic-word { font-style: italic; color: var(--ink); }
@@ -887,22 +887,22 @@
 
   .stage {
     display: grid;
-    grid-template-columns: 120px 1.2fr 2fr;
-    gap: 60px;
-    padding: 56px 0;
+    grid-template-columns: 180px 320px 1fr;
+    gap: 32px;
+    padding: 48px 0;
     border-bottom: 1px solid var(--hairline);
-    align-items: start;
-    transition: background 0.6s var(--easing);
+    align-items: baseline;
+    transition: background 0.4s var(--easing);
   }
   .stage:hover { background: rgba(139, 106, 79, 0.04); }
 
   .stage-num {
     font-family: var(--display);
     font-weight: 300;
-    font-size: 56px;
+    font-size: 44px;
     line-height: 1;
     color: var(--clay);
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
   }
   .stage-num .slash {
     font-style: italic;
@@ -923,10 +923,12 @@
   .stage-name .italic-word { font-style: italic; color: var(--clay); }
 
   .stage-desc {
-    font-size: 15.5px;
-    line-height: 1.7;
+    font-size: 14.5px;
+    line-height: 1.6;
     color: var(--ink-soft);
-    max-width: 560px;
+    max-width: 480px;
+    margin: 0;
+    padding: 0;
   }
 
   /* — Contact — */

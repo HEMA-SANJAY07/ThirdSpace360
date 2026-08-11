@@ -1,63 +1,67 @@
-/* — Process — */
+/* — Process Section — */
 .process-intro {
-  max-width: 620px;
+  max-width: 580px;
   font-family: var(--display);
   font-weight: 300;
-  font-size: clamp(20px, 1.9vw, 26px);
+  font-size: clamp(20px, 1.9vw, 25px);
   line-height: 1.45;
   color: var(--ink-soft);
-  margin-bottom: 80px;
+  margin-bottom: 64px;
   letter-spacing: -0.005em;
 }
 .process-intro .italic-word { font-style: italic; color: var(--ink); }
 
 .process-stages {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
   border-top: 1px solid var(--hairline);
+  width: 100%;
 }
 
 .stage {
   display: grid;
-  grid-template-columns: 120px 1.2fr 2fr;
-  gap: 60px;
-  padding: 56px 0;
+  grid-template-columns: 180px 320px 1fr;
+  gap: 32px;
+  padding: 48px 0;
   border-bottom: 1px solid var(--hairline);
-  align-items: start;
-  transition: background 0.6s var(--easing);
+  align-items: baseline;
+  transition: background 0.4s var(--easing);
 }
 .stage:hover { background: rgba(139, 106, 79, 0.04); }
 
 .stage-num {
   font-family: var(--display);
   font-weight: 300;
-  font-size: 56px;
+  font-size: 44px;
   line-height: 1;
   color: var(--clay);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
 }
 .stage-num .slash {
   font-style: italic;
   color: var(--ink-mute);
-  font-size: 0.5em;
-  margin-left: 6px;
-  vertical-align: middle;
+  font-size: 0.52em;
+  margin-left: 4px;
+  vertical-align: baseline;
 }
 
 .stage-name {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(26px, 2.6vw, 38px);
-  line-height: 1.05;
+  font-size: clamp(24px, 2.3vw, 34px);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--ink);
+  margin: 0;
 }
 .stage-name .italic-word { font-style: italic; color: var(--clay); }
 
 .stage-desc {
-  font-size: 15.5px;
-  line-height: 1.7;
+  font-size: 14.5px;
+  line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 560px;
+  max-width: 480px;
+  margin: 0;
+  padding: 0;
+  align-self: baseline;
 }
