@@ -203,7 +203,7 @@ export async function onRequestPost(context) {
 
   // --- Transactional email via Resend API ---
   const resendApiKey = env.RESEND_API_KEY;
-  const clientEmail = env.CLIENT_EMAIL || "studio@thirdspace360.in";
+  const clientEmail = env.CLIENT_EMAIL || "hemasanjayv07@gmail.com";
 
   if (resendApiKey) {
     try {
@@ -284,8 +284,8 @@ export async function onRequestPost(context) {
   // ----------------------------------------------------
   return new Response(JSON.stringify({ 
     success: true, 
-    message: "Enquiry logged successfully.",
-    delivery: { email: emailSent }
+    message: emailSent ? "Enquiry submitted successfully! Email dispatched." : "Enquiry logged.",
+    delivery: { email: emailSent, logs: logs }
   }), {
     status: 200,
     headers: {

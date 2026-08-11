@@ -19,6 +19,24 @@ export class ServiceTabs {
    * Query the DOM and bind click listeners.
    */
   init() {
+    // 1. Support .services-hover section layout
+    this.rows = document.querySelectorAll('.services-hover .sh-row');
+    this.hoverImgs = document.querySelectorAll('.services-hover .sh-preview-img');
+    this.hoverCaption = document.querySelector('.services-hover .sh-preview-caption');
+
+    if (this.rows.length && this.hoverImgs.length) {
+      this.titleEl = this.hoverCaption ? this.hoverCaption.querySelector('.ctitle') : null;
+      this.metaEl = this.hoverCaption ? this.hoverCaption.querySelector('.cmeta') : null;
+
+      this.rows.forEach((row, i) => {
+        const name = (row.dataset.name || '').replace(/&amp;/g, '&');
+        row.addEventListener('mouseenter', () => this.activateHover(i, name));
+        row.addEventListener('click', () => this.activateHover(i, name));
+      });
+      return;
+    }
+
+    // 2. Fallback for .services-tabbed section layout
     this.tabsList = document.querySelector('.services-tabbed .tabs-list');
     this.tabs = document.querySelectorAll('.services-tabbed .tab');
     this.imgs = document.querySelectorAll('.services-tabbed .tab-img');
@@ -58,6 +76,26 @@ export class ServiceTabs {
         this.tabsList.classList.remove('open');
       }
     });
+  }
+
+  /**
+   * Hover/click activation for .services-hover rows.
+   */
+  activateHover(index, name) {
+    if (!this.hoverImgs.length) return;
+    this.hoverImgs.forEach((img, i) => img.classList.toggle('active', i === index));
+    this.rows.forEach((r, i) => r.classList.toggle('active', i === index));
+
+    if (this.hoverCaption && this.titleEl) {
+      this.hoverCaption.classList.remove('show');
+      setTimeout(() => {
+        this.titleEl.textContent = name;
+        if (this.metaEl) {
+          this.metaEl.textContent = 'Service / 0' + (index + 1);
+        }
+        this.hoverCaption.classList.add('show');
+      }, 100);
+    }
   }
 
   /* ---- Public --------------------------------------------------------- */
