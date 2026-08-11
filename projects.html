@@ -857,20 +857,23 @@
       </div>
     </div>
 
-    <div class="enquiry-form reveal delay-2">
+    <form id="enquiry-form" class="enquiry-form reveal delay-2" novalidate autocomplete="off">
       <p class="form-eyebrow">
         Tell us about your project, the nature of the space,
         and the experience you wish to create.
       </p>
 
+      <!-- Honeypot Bot Trap -->
+      <input type="text" name="organization_real" id="organization_real" style="display:none !important;" tabindex="-1" autocomplete="off" />
+
       <div class="field-group">
         <div class="field">
-          <label for="name">Name</label>
-          <input id="name" type="text" placeholder="Your name" />
+          <label for="name">Name *</label>
+          <input id="name" type="text" placeholder="Your name" required />
         </div>
         <div class="field">
-          <label for="email">Email</label>
-          <input id="email" type="email" placeholder="you@email.com" />
+          <label for="email">Email *</label>
+          <input id="email" type="email" placeholder="you@email.com" required />
         </div>
       </div>
 
@@ -880,17 +883,24 @@
           <input id="phone" type="tel" placeholder="+91" />
         </div>
         <div class="field">
-          <label for="service">Type of Service</label>
-          <select id="service">
-            <option>Interior Design</option>
-            <option>Turnkey Execution</option>
-            <option>Design + Build</option>
-            <option>Project Management</option>
-            <option>Bespoke Furniture &amp; Detailing</option>
-            <option>Commercial / Hospitality Interiors</option>
-            <option>Other</option>
+          <label for="space">Nature of Space *</label>
+          <select id="space" required>
+            <option value="" disabled selected>Select nature of space…</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Hospitality">Hospitality</option>
+            <option value="Turnkey Execution">Turnkey Execution</option>
+            <option value="Design + Build">Design + Build</option>
+            <option value="Project Management">Project Management</option>
+            <option value="Bespoke Furniture &amp; Detailing">Bespoke Furniture &amp; Detailing</option>
+            <option value="Other">Other</option>
           </select>
         </div>
+      </div>
+
+      <div class="field full">
+        <label for="city">City / Location</label>
+        <input id="city" type="text" placeholder="e.g. Chennai, Bengaluru" />
       </div>
 
       <div class="field full">
@@ -898,10 +908,17 @@
         <textarea id="message" rows="4" placeholder="Tell us about your space and requirements…"></textarea>
       </div>
 
-      <button class="submit-btn" type="button" >
-        Submit <span class="arrow">→</span>
+      <!-- Turnstile CAPTCHA container -->
+      <div class="field-group">
+        <div class="field full" style="margin-bottom: 20px;">
+          <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark"></div>
+        </div>
+      </div>
+
+      <button class="submit-btn" type="submit">
+        Send Enquiry <span class="arrow">→</span>
       </button>
-    </div>
+    </form>
   </div>
 </section>
 
