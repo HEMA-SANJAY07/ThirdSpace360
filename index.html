@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
 <link rel="preconnect" href="https://api.resend.com">
-<!-- Preload primary fonts -->
-<link rel="preload" href="fonts/manrope-v15-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/fraunces-v38-latin-500.woff2" as="font" type="font/woff2" crossorigin>
-
-<!-- Modular Stylesheets -->
-<link rel="stylesheet" href="css/fonts.css" />
+<!-- High Performance Google Fonts Variable CDN -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css" />
 <link rel="stylesheet" href="css/reset.css" />
 <link rel="stylesheet" href="css/typography.css" />
@@ -547,152 +545,6 @@
   <div class="credit">Designed with care, in Chennai.</div>
 </footer>
 
-<script>
-  // Nav scroll state
-  const nav = document.getElementById('nav');
-  let lastY = 0;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > 40) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-    lastY = y;
-  }, { passive: true });
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-  reveals.forEach(el => io.observe(el));
-
-  // Hero slider — auto-rotate every 2.5s with manual click support
-  (function initHeroSlider() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const indicators = document.querySelectorAll('.hero-indicator');
-    if (!slides.length) return;
-
-    const INTERVAL = 2500;
-    let current = 0;
-    let timer;
-
-    function showSlide(index) {
-      slides.forEach((s, i) => s.classList.toggle('active', i === index));
-      indicators.forEach((d, i) => d.classList.toggle('active', i === index));
-      current = index;
-    }
-
-    function startTimer() {
-      clearInterval(timer);
-      timer = setInterval(() => {
-        showSlide((current + 1) % slides.length);
-      }, INTERVAL);
-    }
-
-    indicators.forEach((d, i) => {
-      d.addEventListener('click', () => {
-        showSlide(i);
-        startTimer();
-      });
-    });
-
-    // Pause when tab not visible (saves battery, avoids skipping ahead)
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) clearInterval(timer);
-      else startTimer();
-    });
-
-    startTimer();
-  })();
-
-  // Services — hover-reveal preview
-  (function initServicesHover() {
-    const rows = document.querySelectorAll('.services-hover .sh-row');
-    const imgs = document.querySelectorAll('.services-hover .sh-preview-img');
-    const caption = document.querySelector('.services-hover .sh-preview-caption');
-    if (!rows.length || !caption) return;
-
-    const title = caption.querySelector('.ctitle');
-    const meta = caption.querySelector('.cmeta');
-
-    function activate(idx, name) {
-      imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
-      rows.forEach((r, i) => r.classList.toggle('active', i === idx));
-
-      caption.classList.remove('show');
-      setTimeout(() => {
-        title.textContent = name;
-        meta.textContent = 'Service / 0' + (idx + 1);
-        caption.classList.add('show');
-      }, 100);
-    }
-
-    rows.forEach((row, i) => {
-      const name = row.dataset.name.replace(/&amp;/g, '&');
-      row.addEventListener('mouseenter', () => activate(i, name));
-      // Touch — tap to advance preview on devices without hover
-      row.addEventListener('click', () => activate(i, name));
-    });
-  })();
-
-  // Projects — click a tile to open the project modal
-  (function initProjectModal() {
-    const cards = document.querySelectorAll('.project-card');
-    const modal = document.getElementById('project-modal');
-    if (!cards.length || !modal) return;
-
-    const titleEl = document.getElementById('project-modal-title');
-    let lastFocused = null;
-
-    function openModal(card) {
-      const name = card.dataset.project || 'Project';
-      titleEl.textContent = name;
-      lastFocused = document.activeElement;
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-      if (lastFocused) lastFocused.focus();
-    }
-
-    cards.forEach(card => {
-      card.addEventListener('click', () => openModal(card));
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openModal(card);
-        }
-      });
-    });
-
-    modal.querySelectorAll('[data-modal-close]').forEach(el => {
-      el.addEventListener('click', closeModal);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
-  })();
-
-  // Form feedback
-  , 3200);
-  }
-
-  // Mobile menu (simple smooth scroll close)
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      // visual feedback only
-    });
-  });
-</script>
-
-  <script type="module" src="js/app.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
