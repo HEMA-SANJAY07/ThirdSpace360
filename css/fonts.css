@@ -1,59 +1,25 @@
-/* Local Self-Hosted Fonts */
-
+/* --- Metric Overrides (CLS Prevention) --- */
 @font-face {
-  font-family: 'Fraunces';
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../assets/fonts/fraunces-300-italic.woff2') format('woff2');
+  font-family: 'Manrope Fallback';
+  src: local('Arial'), local('Helvetica');
+  ascent-override: 95%;
+  descent-override: 25%;
 }
 
 @font-face {
-  font-family: 'Fraunces';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/fraunces-400-italic.woff2') format('woff2');
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  ascent-override: 92%;
+  descent-override: 24%;
 }
 
-@font-face {
-  font-family: 'Fraunces';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../assets/fonts/fraunces-300-normal.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Fraunces';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/fraunces-400-normal.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Fraunces';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('../assets/fonts/fraunces-500-normal.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Manrope';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('../assets/fonts/manrope-300-normal.woff2') format('woff2');
-}
-
+/* --- MANROPE --- */
 @font-face {
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../assets/fonts/manrope-400-normal.woff2') format('woff2');
+  src: url('../fonts/manrope-v15-latin-regular.woff2') format('woff2');
 }
 
 @font-face {
@@ -61,7 +27,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('../assets/fonts/manrope-500-normal.woff2') format('woff2');
+  src: url('../fonts/manrope-v15-latin-500.woff2') format('woff2');
 }
 
 @font-face {
@@ -69,5 +35,52 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('../assets/fonts/manrope-600-normal.woff2') format('woff2');
+  src: url('../fonts/manrope-v15-latin-600.woff2') format('woff2');
+}
+
+/* --- FRAUNCES --- */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/fraunces-v38-latin-300.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/fraunces-v38-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/fraunces-v38-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/fraunces-v38-latin-300italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/fraunces-v38-latin-italic.woff2') format('woff2');
+}
+
+/* --- VARIABLES --- */
+:root {
+  --display: 'Fraunces', 'Fraunces Fallback', Georgia, serif;
+  --body: 'Manrope', 'Manrope Fallback', system-ui, sans-serif;
 }
